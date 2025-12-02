@@ -28,7 +28,10 @@ async def food_command(interaction: discord.Interaction):
     food_plan = get_week_data(get_week_source(datetime.date.today() + datetime.timedelta(weeks=timedelta)))
     message = ""
     message += "***" + calendar.day_name[weekday] + "***\n"
-    food_plan_day = food_plan[weekday + 1]
+    if timedelta > 0:
+        food_plan_day = food_plan[weekday]
+    else:
+        food_plan_day = food_plan[1]
     for key, value in food_plan_day.items():
         if value:
             message += f"**{key}**\n"
@@ -50,7 +53,10 @@ async def food_next_command(interaction: discord.Interaction):
     food_plan = get_week_data(get_week_source(datetime.date.today() + datetime.timedelta(weeks=timedelta)))
     message = ""
     message += "***" + calendar.day_name[weekday] + "***\n"
-    food_plan_day = food_plan[weekday + 1]
+    if timedelta > 0:
+        food_plan_day = food_plan[weekday]
+    else:
+        food_plan_day = food_plan[2]
     for key, value in food_plan_day.items():
         if value:
             message += f"**{key}**\n"
