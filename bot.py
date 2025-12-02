@@ -18,9 +18,31 @@ intents = discord.Intents.default()
 client = MyClient(intents=intents)
 
 
-@client.tree.command(name="food", description="Gibt den Essensplan für heute oder die ganze Woche zurück.")
+@client.tree.command(name="food", description="Gibt den Essensplan für heute zurück.")
 async def food_command(interaction: discord.Interaction):
     weekday = datetime.date.today().weekday()
+    timedelta = 0
+    if weekday > 4:
+        timedelta = 1
+        weekday = 0
+    food_plan = get_week_data(get_week_source(datetime.date.today() + datetime.timedelta(days=timedelta)))
+    message = ""
+    message += "***" + calendar.day_name[weekday] + "***\n"
+    food_plan_day = food_plan[weekday + 1]
+    for key, value in food_plan_day.items():
+        if value:
+            message += f"**{key}**\n"
+        for element in value:
+            message += f"* {element[0]} ({element[1]})\n"
+        if value:
+            message += "\n"
+
+    await interaction.response.send_message(message)
+
+
+@client.tree.command(name="food-next", description="Gibt den Essensplan für morgen zurück.")
+async def food_next_command(interaction: discord.Interaction):
+    weekday = datetime.date.today().weekday() + 1
     timedelta = 0
     if weekday > 4:
         timedelta = 1
