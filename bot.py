@@ -35,7 +35,7 @@ async def food_command(interaction: discord.Interaction):
     message = ""
     message += "***" + calendar.day_name[weekday] + "***\n"
     if timedelta > 0:
-        food_plan_day = food_plan[weekday]
+        food_plan_day = food_plan[weekday + 1]
     else:
         food_plan_day = food_plan[1]
     for key, value in food_plan_day.items():
@@ -60,7 +60,7 @@ async def food_next_command(interaction: discord.Interaction):
     message = ""
     message += "***" + calendar.day_name[weekday] + "***\n"
     if timedelta > 0:
-        food_plan_day = food_plan[weekday]
+        food_plan_day = food_plan[weekday + 1]
     else:
         food_plan_day = food_plan[2]
     for key, value in food_plan_day.items():
