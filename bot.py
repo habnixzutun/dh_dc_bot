@@ -1,14 +1,13 @@
 from discord import app_commands
 from dotenv import load_dotenv
-import os
-import discord
-import calendar
+from euklid import *
+from math_christmas_tree import christmas_tree
 from prettytable import PrettyTable
 from requests import get
-
-from math_christmas_tree import christmas_tree
 from site_scraper import *
-from euklid import *
+import calendar
+import discord
+import os
 
 
 class MyClient(discord.Client):
