@@ -215,17 +215,18 @@ async def leaderboard_command(interaction: discord.Interaction):
     if not response.is_success:
         await interaction.response.send_message("Something went wrong :(")
         return
-    raw = response.json()
+    raw = response.json().get("entries")
 
     table = PrettyTable(["Platz", "Name", "Richtig", "Falsch", "Punkte"])
-    for index, value in raw.items():
+    for index, value in enumerate(raw, start=1):
+        position = index
         if index == 1:
-            value["index"] = "🏆"
-        elif index == 1:
-            value["index"] = "🥈"
-        elif index == 1:
-            value["index"] = "🥉"
-        table.add_row([value["index"], value["name"], value["correct"], value["wrong"], value["points"]])
+            position = "🏆"
+        elif index == 2:
+            position = "🥈"
+        elif index == 3:
+            position = "🥉"
+        table.add_row([position, value["name"], value["correct"], value["incorrect"], value["points"]])
 
     message = "```\n" + table.get_string() + "\n```"
 
