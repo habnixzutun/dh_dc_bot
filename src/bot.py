@@ -1,9 +1,9 @@
 from discord import app_commands
 from dotenv import load_dotenv
+from httpx import get
 from euklid import *
 from math_christmas_tree import christmas_tree
 from prettytable import PrettyTable
-from requests import get
 from site_scraper import *
 import calendar
 import discord
@@ -212,7 +212,7 @@ async def christmastree_command(interaction: discord.Interaction):
 @client.tree.command(name="leaderboard", description="Gibt das hexToBinTrainer Leaderboard zurück")
 async def leaderboard_command(interaction: discord.Interaction):
     response = get(os.getenv("LEADERBOARD_ENDPOINT"))
-    if response.status_code != 200:
+    if not response.is_success:
         await interaction.response.send_message("Something went wrong :(")
         return
     raw = response.json()

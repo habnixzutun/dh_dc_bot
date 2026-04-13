@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from requests import get
+from httpx import get
 from dotenv import load_dotenv
 import datetime
 from pprint import pprint
@@ -15,7 +15,7 @@ def get_week_source(date: datetime.date = None) -> BeautifulSoup | None:
         url += f"?kw={get_kw(date)}"
 
     response = get(url)
-    if not response.ok:
+    if not response.is_success:
         return None
     soup = BeautifulSoup(response.content, "html.parser")
     return soup
