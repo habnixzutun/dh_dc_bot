@@ -15,4 +15,4 @@ RUN uv sync --no-dev --no-install-project
 COPY . .
 
 # Definiere den Befehl, der beim Start des Containers ausgeführt wird
-CMD ["uv", "run", "bot.py"]
+CMD ["uv", "run", "src/bot.py"]
